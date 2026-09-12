@@ -293,52 +293,95 @@ function listToArray(head) {
 
 // 09. Permutation in String 
 
-/**
- * @param {string} s1
- * @param {string} s2
- * @return {boolean}
- */
-var checkInclusion = function(s1, s2) {
-    if (s1.length > s2.length) return false;
+// /**
+//  * @param {string} s1
+//  * @param {string} s2
+//  * @return {boolean}
+//  */
+// var checkInclusion = function(s1, s2) {
+//     if (s1.length > s2.length) return false;
     
-    const count1 = new Array(26).fill(0);
-    const count2 = new Array(26).fill(0);
+//     const count1 = new Array(26).fill(0);
+//     const count2 = new Array(26).fill(0);
     
-    for (let i = 0; i < s1.length; i++) {
-        count1[s1.charCodeAt(i) - 97]++;
-        count2[s2.charCodeAt(i) - 97]++;
-    }
+//     for (let i = 0; i < s1.length; i++) {
+//         count1[s1.charCodeAt(i) - 97]++;
+//         count2[s2.charCodeAt(i) - 97]++;
+//     }
     
-    let matches = 0;
-    for (let i = 0; i < 26; i++) {
-        if (count1[i] === count2[i]) matches++;
-    }
+//     let matches = 0;
+//     for (let i = 0; i < 26; i++) {
+//         if (count1[i] === count2[i]) matches++;
+//     }
     
-    for (let i = 0; i < s2.length - s1.length; i++) {
-        if (matches === 26) return true;
+//     for (let i = 0; i < s2.length - s1.length; i++) {
+//         if (matches === 26) return true;
         
-        const leftIdx = s2.charCodeAt(i) - 97;
-        const rightIdx = s2.charCodeAt(i + s1.length) - 97;
+//         const leftIdx = s2.charCodeAt(i) - 97;
+//         const rightIdx = s2.charCodeAt(i + s1.length) - 97;
         
-        count2[rightIdx]++;
-        if (count2[rightIdx] === count1[rightIdx]) {
-            matches++;
-        } else if (count2[rightIdx] === count1[rightIdx] + 1) {
-            matches--;
-        }
+//         count2[rightIdx]++;
+//         if (count2[rightIdx] === count1[rightIdx]) {
+//             matches++;
+//         } else if (count2[rightIdx] === count1[rightIdx] + 1) {
+//             matches--;
+//         }
         
-        count2[leftIdx]--;
-        if (count2[leftIdx] === count1[leftIdx]) {
-            matches++;
-        } else if (count2[leftIdx] === count1[leftIdx] - 1) {
-            matches--;
-        }
-    }
+//         count2[leftIdx]--;
+//         if (count2[leftIdx] === count1[leftIdx]) {
+//             matches++;
+//         } else if (count2[leftIdx] === count1[leftIdx] - 1) {
+//             matches--;
+//         }
+//     }
     
-    return matches === 26;
-};
+//     return matches === 26;
+// };
 
 
 
 // console.log("('ab', 'eidbaooo'):", checkInclusion("ab", "eidbaooo"));
 // console.log(" ('ab', 'eidboaoo'):", checkInclusion("ab", "eidboaoo"));
+
+
+
+
+
+
+// 10. Find All Anagrams in a String 
+
+/**
+ * @param {string} s
+ * @param {string} p
+ * @return {number[]}
+ */
+var findAnagrams = function(s, p) {
+    const result = [];
+    if (s.length < p.length) return result;
+    
+    const pCount = new Array(26).fill(0);
+    const sCount = new Array(26).fill(0);
+    
+    for (let i = 0; i < p.length; i++) {
+        pCount[p.charCodeAt(i) - 97]++;
+        sCount[s.charCodeAt(i) - 97]++;
+    }
+    
+    if (pCount.join(',') === sCount.join(',')) {
+        result.push(0);
+    }
+    
+    for (let i = p.length; i < s.length; i++) {
+        sCount[s.charCodeAt(i) - 97]++;
+        sCount[s.charCodeAt(i - p.length) - 97]--;
+        
+        if (pCount.join(',') === sCount.join(',')) {
+            result.push(i - p.length + 1);
+        }
+    }
+    
+    return result;
+};
+
+
+// console.log("('abab', 'ab'):", findAnagrams("abab", "ab"));
