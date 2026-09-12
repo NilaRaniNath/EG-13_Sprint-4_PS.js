@@ -134,22 +134,46 @@ function listToArray(head) {
 
 // 04. Reverse Linked List
 
+// /**
+//  * @param {ListNode} head
+//  * @return {ListNode}
+//  */
+// var reverseList = function(head) {
+//     let prev = null;
+//     let curr = head;
+    
+//     while (curr !== null) {
+//         let nextTemp = curr.next;
+//         curr.next = prev;
+//         prev = curr;
+//         curr = nextTemp;
+//     }
+    
+//     return prev;
+// };
+
+// console.log("([1, 2, 3, 6, 8, 3, 9]):", listToArray(reverseList(arrayToList([1, 2, 3, 6, 8, 3, 9]))));
+
+
+
+
+
+// 05. Middle of the Linked List
+
 /**
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function(head) {
-    let prev = null;
-    let curr = head;
+var middleNode = function(head) {
+    let slow = head;
+    let fast = head;
     
-    while (curr !== null) {
-        let nextTemp = curr.next;
-        curr.next = prev;
-        prev = curr;
-        curr = nextTemp;
+    while (fast !== null && fast.next !== null) {
+        slow = slow.next;
+        fast = fast.next.next;
     }
     
-    return prev;
+    return slow;
 };
-
-// console.log("([1, 2, 3, 6, 8, 3, 9]):", listToArray(reverseList(arrayToList([1, 2, 3, 6, 8, 3, 9]))));
+ 
+// console.log(" ([1, 2, 3, 4, 5, 6]):", listToArray(middleNode(arrayToList([1, 2, 3, 4, 5, 6]))));
