@@ -160,20 +160,54 @@ function listToArray(head) {
 
 // 05. Middle of the Linked List
 
-/**
- * @param {ListNode} head
- * @return {ListNode}
- */
-var middleNode = function(head) {
-    let slow = head;
-    let fast = head;
+// /**
+//  * @param {ListNode} head
+//  * @return {ListNode}
+//  */
+// var middleNode = function(head) {
+//     let slow = head;
+//     let fast = head;
     
-    while (fast !== null && fast.next !== null) {
-        slow = slow.next;
-        fast = fast.next.next;
-    }
+//     while (fast !== null && fast.next !== null) {
+//         slow = slow.next;
+//         fast = fast.next.next;
+//     }
     
-    return slow;
-};
+//     return slow;
+// };
  
 // console.log(" ([1, 2, 3, 4, 5, 6]):", listToArray(middleNode(arrayToList([1, 2, 3, 4, 5, 6]))));
+
+
+
+
+
+
+// 06. Product of Array Except Self
+
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var productExceptSelf = function(nums) {
+    const n = nums.length;
+    const res = new Array(n).fill(1);
+    
+    let prefix = 1;
+    for (let i = 0; i < n; i++) {
+        res[i] = prefix;
+        prefix *= nums[i];
+    }
+    
+    let postfix = 1;
+    for (let i = n - 1; i >= 0; i--) {
+        res[i] *= postfix;
+        postfix *= nums[i];
+    }
+    
+    return res;
+};
+
+
+// console.log("([-1, 1, 0, -3, 3]):", productExceptSelf([-1, 1, 0, -3, 3]));
