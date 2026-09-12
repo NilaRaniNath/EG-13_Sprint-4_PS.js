@@ -1,3 +1,41 @@
+// for test
+
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val);
+    this.next = (next === undefined ? null : next);
+}
+
+function arrayToList(arr) {
+    let dummy = new ListNode(0);
+    let current = dummy;
+    for (let val of arr) {
+        current.next = new ListNode(val);
+        current = current.next;
+    }
+    return dummy.next;
+}
+
+function listToArray(head) {
+    let result = [];
+    let current = head;
+    while (current !== null) {
+        result.push(current.val);
+        current = current.next;
+    }
+    return result;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 // 01. Isomorphic Strings
 
 // /**
@@ -70,22 +108,48 @@
 
 // 03. Find the Difference
 
-/**
- * @param {string} s
- * @param {string} t
- * @return {character}
- */
-var findTheDifference = function(s, t) {
-    let xorVal = 0;
+// /**
+//  * @param {string} s
+//  * @param {string} t
+//  * @return {character}
+//  */
+// var findTheDifference = function(s, t) {
+//     let xorVal = 0;
     
-    for (let i = 0; i < s.length; i++) {
-        xorVal ^= s.charCodeAt(i);
-    }
-    for (let i = 0; i < t.length; i++) {
-        xorVal ^= t.charCodeAt(i);
-    }
+//     for (let i = 0; i < s.length; i++) {
+//         xorVal ^= s.charCodeAt(i);
+//     }
+//     for (let i = 0; i < t.length; i++) {
+//         xorVal ^= t.charCodeAt(i);
+//     }
     
-    return String.fromCharCode(xorVal);
-};
+//     return String.fromCharCode(xorVal);
+// };
 
 // console.log("('abcd', 'abcde'):", findTheDifference("abcd", "abcde"));
+
+
+
+
+
+// 04. Reverse Linked List
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+    let prev = null;
+    let curr = head;
+    
+    while (curr !== null) {
+        let nextTemp = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = nextTemp;
+    }
+    
+    return prev;
+};
+
+// console.log("([1, 2, 3, 6, 8, 3, 9]):", listToArray(reverseList(arrayToList([1, 2, 3, 6, 8, 3, 9]))));
