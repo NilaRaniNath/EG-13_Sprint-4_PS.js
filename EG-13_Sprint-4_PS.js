@@ -186,28 +186,64 @@ function listToArray(head) {
 // 06. Product of Array Except Self
 
 
-/**
- * @param {number[]} nums
- * @return {number[]}
- */
-var productExceptSelf = function(nums) {
-    const n = nums.length;
-    const res = new Array(n).fill(1);
+// /**
+//  * @param {number[]} nums
+//  * @return {number[]}
+//  */
+// var productExceptSelf = function(nums) {
+//     const n = nums.length;
+//     const res = new Array(n).fill(1);
     
-    let prefix = 1;
-    for (let i = 0; i < n; i++) {
-        res[i] = prefix;
-        prefix *= nums[i];
-    }
+//     let prefix = 1;
+//     for (let i = 0; i < n; i++) {
+//         res[i] = prefix;
+//         prefix *= nums[i];
+//     }
     
-    let postfix = 1;
-    for (let i = n - 1; i >= 0; i--) {
-        res[i] *= postfix;
-        postfix *= nums[i];
-    }
+//     let postfix = 1;
+//     for (let i = n - 1; i >= 0; i--) {
+//         res[i] *= postfix;
+//         postfix *= nums[i];
+//     }
     
-    return res;
-};
+//     return res;
+// };
 
 
 // console.log("([-1, 1, 0, -3, 3]):", productExceptSelf([-1, 1, 0, -3, 3]));
+
+
+
+
+
+
+
+// 07. Remove Nth Node From End of List
+
+
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+    const dummy = new ListNode(0, head);
+    let fast = dummy;
+    let slow = dummy;
+    
+    for (let i = 0; i <= n; i++) {
+        fast = fast.next;
+    }
+    
+    while (fast !== null) {
+        slow = slow.next;
+        fast = fast.next;
+    }
+    
+    slow.next = slow.next.next;
+    
+    return dummy.next;
+};
+
+
+// console.log("listArray", listToArray(removeNthFromEnd(arrayToList([1, 2, 3, 4, 5]), 2)));
