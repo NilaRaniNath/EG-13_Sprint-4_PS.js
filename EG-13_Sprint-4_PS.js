@@ -221,29 +221,69 @@ function listToArray(head) {
 // 07. Remove Nth Node From End of List
 
 
-/**
- * @param {ListNode} head
- * @param {number} n
- * @return {ListNode}
- */
-var removeNthFromEnd = function(head, n) {
-    const dummy = new ListNode(0, head);
-    let fast = dummy;
-    let slow = dummy;
+// /**
+//  * @param {ListNode} head
+//  * @param {number} n
+//  * @return {ListNode}
+//  */
+// var removeNthFromEnd = function(head, n) {
+//     const dummy = new ListNode(0, head);
+//     let fast = dummy;
+//     let slow = dummy;
     
-    for (let i = 0; i <= n; i++) {
-        fast = fast.next;
-    }
+//     for (let i = 0; i <= n; i++) {
+//         fast = fast.next;
+//     }
     
-    while (fast !== null) {
-        slow = slow.next;
-        fast = fast.next;
-    }
+//     while (fast !== null) {
+//         slow = slow.next;
+//         fast = fast.next;
+//     }
     
-    slow.next = slow.next.next;
+//     slow.next = slow.next.next;
     
-    return dummy.next;
-};
+//     return dummy.next;
+// };
 
 
 // console.log("listArray", listToArray(removeNthFromEnd(arrayToList([1, 2, 3, 4, 5]), 2)));
+
+
+
+
+
+
+// 08. Find First and Last Position of Element in Sorted Array
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var searchRange = function(nums, target) {
+    const findBound = (isFirst) => {
+        let left = 0, right = nums.length - 1;
+        let bound = -1;
+        
+        while (left <= right) {
+            let mid = Math.floor((left + right) / 2);
+            if (nums[mid] === target) {
+                bound = mid;
+                if (isFirst) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return bound;
+    };
+    
+    return [findBound(true), findBound(false)];
+};
+
+// console.log("([5,7,7,8,8,10]", searchRange([5, 7, 7, 8, 8, 10], 8));
