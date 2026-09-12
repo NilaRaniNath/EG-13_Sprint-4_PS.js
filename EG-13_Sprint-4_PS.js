@@ -255,35 +255,90 @@ function listToArray(head) {
 
 // 08. Find First and Last Position of Element in Sorted Array
 
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
-var searchRange = function(nums, target) {
-    const findBound = (isFirst) => {
-        let left = 0, right = nums.length - 1;
-        let bound = -1;
+// /**
+//  * @param {number[]} nums
+//  * @param {number} target
+//  * @return {number[]}
+//  */
+// var searchRange = function(nums, target) {
+//     const findBound = (isFirst) => {
+//         let left = 0, right = nums.length - 1;
+//         let bound = -1;
         
-        while (left <= right) {
-            let mid = Math.floor((left + right) / 2);
-            if (nums[mid] === target) {
-                bound = mid;
-                if (isFirst) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return bound;
-    };
+//         while (left <= right) {
+//             let mid = Math.floor((left + right) / 2);
+//             if (nums[mid] === target) {
+//                 bound = mid;
+//                 if (isFirst) {
+//                     right = mid - 1;
+//                 } else {
+//                     left = mid + 1;
+//                 }
+//             } else if (nums[mid] < target) {
+//                 left = mid + 1;
+//             } else {
+//                 right = mid - 1;
+//             }
+//         }
+//         return bound;
+//     };
     
-    return [findBound(true), findBound(false)];
-};
+//     return [findBound(true), findBound(false)];
+// };
 
 // console.log("([5,7,7,8,8,10]", searchRange([5, 7, 7, 8, 8, 10], 8));
+
+
+
+
+// 09. Permutation in String 
+
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {boolean}
+ */
+var checkInclusion = function(s1, s2) {
+    if (s1.length > s2.length) return false;
+    
+    const count1 = new Array(26).fill(0);
+    const count2 = new Array(26).fill(0);
+    
+    for (let i = 0; i < s1.length; i++) {
+        count1[s1.charCodeAt(i) - 97]++;
+        count2[s2.charCodeAt(i) - 97]++;
+    }
+    
+    let matches = 0;
+    for (let i = 0; i < 26; i++) {
+        if (count1[i] === count2[i]) matches++;
+    }
+    
+    for (let i = 0; i < s2.length - s1.length; i++) {
+        if (matches === 26) return true;
+        
+        const leftIdx = s2.charCodeAt(i) - 97;
+        const rightIdx = s2.charCodeAt(i + s1.length) - 97;
+        
+        count2[rightIdx]++;
+        if (count2[rightIdx] === count1[rightIdx]) {
+            matches++;
+        } else if (count2[rightIdx] === count1[rightIdx] + 1) {
+            matches--;
+        }
+        
+        count2[leftIdx]--;
+        if (count2[leftIdx] === count1[leftIdx]) {
+            matches++;
+        } else if (count2[leftIdx] === count1[leftIdx] - 1) {
+            matches--;
+        }
+    }
+    
+    return matches === 26;
+};
+
+
+
+// console.log("('ab', 'eidbaooo'):", checkInclusion("ab", "eidbaooo"));
+// console.log(" ('ab', 'eidboaoo'):", checkInclusion("ab", "eidboaoo"));
